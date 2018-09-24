@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Расписашка</title>
+	<link href="https://fonts.googleapis.com/css?family=Philosopher&amp;subset=cyrillic" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<style type="text/css">
+		*, *:before, *:after {
+		    box-sizing: border-box;
+		}
+		html,body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		    font-size: 18px;
+		}
+		body {
+			background-image: url(background2.jpg);
+			display: flex;
+			flex-direction: column;
+		    font-family: 'Philosopher', sans-serif;
+		}
+		#content {
+			flex-grow: 1;
+			margin: 5% 0;
+			width: 100%;
+			/*background-color: rgba(255,255,255,0.7);*/
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+		}
+		#header {
+			margin: 1% 0;
+			background-color: rgba(255,255,255,0.8);
+			padding: 10px;
+		}
+		#h1{
+			display: inline-block;
+			font-weight: bold;
+			font-size: 2em;
+			color: #0078d7;
+		}
+		#days {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: flex-start;
+			flex-grow: 1;
+			max-width: 1250px;
+			margin: 50px auto 0 auto;
+		}
+		.day {
+			padding: 4%;
+			background-color: rgba(255,255,255,0.8);
+		 	box-shadow: 0px 0px 1px rgba(0,0,0,0.5) inset;
+	 	    text-shadow: -1px -1px 0px rgba(0,0,0,0.1);
+	 	    margin: 1%;
+	 	    min-width: 20%;
+	 	    border-radius: 28px;
+		}
+		.day>span {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		input[type="text"] {
+			margin-left: 6px;
+			padding: 5px;
+			border: 1px solid black;
+			outline: none;
+			background-color: inherit;
+			transition: background-color .3s ease-in-out;
+		}
+		input[type="text"]:hover {
+			background-color: white;
+		}
+		/*А тут будут интересные windows-style чекбоксы*/
+		.win{
+			display: inline-block;
+			margin-right: 4rem;
+		}
+		.win>input{
+			position: absolute;
+			left: -90000px;
+		}
+		.win>div{
+			cursor: pointer;
+			border-radius: 2rem;
+			width: 5rem;
+			height: 2rem;
+			background-color: white;
+			border: 2px solid black;
+			user-select: none;
+			position: relative;
+			transition: .3s ease-in-out;
+		}
+		.win>input:checked + div {
+			background-color: #0078d7;
+		}
+		.win>div:before {
+			will-change: translate;
+			display: block;
+			position: absolute;
+			top: calc(50% - .5rem);
+			left: .5rem;
+			content: '';
+			width: 1rem;
+			height: 1rem;
+			background: black;
+			border-radius: 50%;
+			transition: 200ms;
+		}
+		.win>input:checked + div:before{
+			color: #0078d7;
+			transform: translateX(calc(2.5*100% + 4px));
+			background: white;
+		}
+		.win>div:after {
+			font-size: 1.1rem;
+			position: absolute;
+			right: -70%;
+			top: 50%;
+			transform: translateY(-50%);
+		    content: attr(data-off);
+		    pointer-events: none;
+		}
+		.win input:checked + div:after {
+			content: attr(data-on);
+		}
+		/*Правое меню*/
+		#rightmenu{
+			position: absolute;
+			right: 2px;
+			width: 10rem;
+			top: 48%;
+			padding: 20px 0 20px 20px;
+		    border-radius: 20% 0 0 20%;
+			background-color: rgba(255,255,255,0.8);
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<div id="header">
+			<span id="h1">Расписашка</span>
+		</div>
+		<div id="days">
+			<div class="day" id="monday">
+				<span>Понедельник</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="day" id="tuesday">
+				<span>Вторник</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="day" id="wednesday">
+				<span>Среда</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="day" id="thursday">
+				<span>Четверг</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="day" id="friday">
+				<span>Пятница</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+			<div class="day" id="saturday">
+				<span>Суббота</span>
+				<table>
+					<tr>
+						<td>1</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" readonly></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><input type="text" readonly></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="rightmenu">
+			<label class="win">
+				<input id="isZnam" type="checkbox" onclick="download()">
+				<div data-off="Числ" data-on="Знам"></div>
+			</label>
+			<label class="win">
+				<input id="podgr" type="checkbox" onclick="download()">
+				<div data-off="/a/" data-on="/b/"></div>
+			</label>
+		</div>
+	</div>
+	<script>
+		function download(){
+			var upObj = {};
+			if (podgr.checked){
+				upObj.podgr = "B";
+			} else {
+				upObj.podgr = "A";
+			}
+			if (isZnam.checked){
+				upObj.ch = "znam";
+			} else {
+				upObj.ch = "chisl";
+			}
+			$.ajax({
+			    type : "POST",
+			    url : 'http://newbotvk.azurewebsites.net/getpairs',
+				data : JSON.stringify(upObj),
+			    success: function(data){
+			        var objData = JSON.parse(data);
+					var days = document.querySelectorAll(".day");
+					for ( var i = 0; i < days.length; i ++){
+						var inps = days[i].querySelectorAll("input");
+						for ( var j = 0; j < inps.length; j++){
+							inps[j].value = objData[i][j];
+						}
+					}
+			    }
+			});
+		}
+	$(document).ready(function(){
+		download();
+	});
+	</script>
+</body>
+</html>
